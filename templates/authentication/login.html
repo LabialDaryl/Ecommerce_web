@@ -1,0 +1,226 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Fauget</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+body {
+  background: url("{% static 'media/mybg5_2.jpg' %}") no-repeat center center;
+  background-size: cover;
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
+  height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+    .container {
+      display: flex;
+      height: 100vh;
+      background-color: rgba(11, 47, 63, 0.6);
+    }
+
+    .left-panel {
+      flex: 1;
+      padding: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .left-panel img {
+      width: 120px;
+      margin-bottom: 30px;
+    }
+
+    .left-panel h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .left-panel p {
+      font-size: 1.3rem;
+      color: #bbbbbb;
+      max-width: 400px;
+      margin: 20px 0;
+    }
+
+    .left-panel .learn-btn {
+      background-color: #ff5e3a;
+      border-radius: 30px;
+      padding: 12px 30px;
+      font-weight: 500;
+      text-decoration: none;
+      color: #fff;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .left-panel .learn-btn:hover {
+      background-color: #e14c2a;
+    }
+
+    .right-panel {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-card {
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .login-card h2 {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      background-color: rgb(255, 255, 255);
+      border: none;
+      color: #000000;
+      padding: 12px 20px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      width: 90%;
+      font-size: 0.95rem;
+    }
+
+    .form-control::placeholder {
+      color: #ccc;
+    }
+
+    .login-btn {
+      background-color: #ff5e3a;
+      border: none;
+      border-radius: 50px;
+      padding: 12px;
+      font-weight: 500;
+      font-size: 1rem;
+      width: 100%;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .login-btn:hover {
+      background-color: #e14c2a;
+    }
+
+    .flash-message {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ff5e3a;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px 20px;
+      border-radius: 50px;
+      text-align: center;
+      margin-bottom: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="left-panel">
+    <img src="{#}" alt="Fauget Logo">
+    <h1>Welcome To PawareHauz</h1>
+    <p>Log in to continue</p>
+    <hr style="border: 1px solid #ff5e3a;width: 500px; margin: 20px 0;">
+    <p>For online buying and selling of hardware needs for house, electronic devices, components, tools and equipment through digital platforms.</p>
+  </div>
+
+  <div class="right-panel">
+    <div class="login-card">
+      <h2>Login</h2>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="flash-message {{ message.tags }}">
+            <i class="fas fa-exclamation-circle" style="font-size: 1.2rem;"></i>
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="POST" action="{% url 'login' %}" autocomplete="off">
+        {% csrf_token %}
+        <label class="form-label" for="username">USERNAME</label>
+        <input type="text" id="username" autocomplete="off" name="username" class="form-control" placeholder="" required>
+
+        <label class="form-label" for="password">PASSWORD</label>
+        <div style="position: relative;">
+          <input type="password" id="password" autocomplete="off" name="password" class="form-control" placeholder="" required>
+          <i class="fas fa-eye-slash" id="togglePassword" style="position: absolute; right: 10px; top: 12px; cursor: pointer; color: orangered"></i>
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+          <a href="{#}" style="color: #ff5e3a; text-decoration: none;">Forgot Password?</a>
+          <a href="{% url 'register' %}" style="color: #ff5e3a; text-decoration: none;">Sign Up</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+  
+    togglePassword.addEventListener('click', function () {
+      // Toggle the type attribute
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+  
+      // Toggle the eye icon
+      this.classList.toggle('fa-eye-slash'); // Change to closed eye
+      this.classList.toggle('fa-eye'); // Change to open eye
+  
+    });
+  
+    setTimeout(() => {
+    const flashMessage = document.querySelector('.flash-message');
+    if (flashMessage) {
+      flashMessage.style.transition = 'opacity 0.5s';
+      flashMessage.style.opacity = '0';
+    }
+  }, 3000); // 3 seconds
+  </script>
+  
+</body>
+</html>

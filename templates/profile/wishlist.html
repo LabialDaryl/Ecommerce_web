@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">Your Wishlist</h2>
+    <p class="text-center text-muted">All the items you've saved for later purchase</p>
+
+    <div class="row">
+        {% for item in wishlist_items %}
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card shadow-sm rounded">
+                    <img src="{{ item.image_url }}" class="card-img-top" alt="{{ item.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text">{{ item.description|truncatewords:15 }}</p>
+                        <a href="#" class="btn btn-primary w-100">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,345 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+    <!-- Hero Section -->
+    <section class="hero-section d-flex align-items-center">
+        <div class="circuit-lines"></div>
+        
+        <!-- Animated particles -->
+        <div id="particles-container"></div>
+        
+        <!-- Floating devices -->
+        <img src="{% static 'media/arduino.png' %}" class="floating-device device-1" alt="Smartphone">
+        <img src="{% static 'media/relay.png' %}" class="floating-device device-2" alt="Laptop">
+        <img src="{% static 'media/tester.png' %}" class="floating-device device-3" alt="Headphones">
+        
+        <div class="container hero-content text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="hero-title mb-4">Next-Gen Tech at Your Fingertips</h1>
+                    <p class="hero-subtitle mb-5">Discover the latest innovations in electronics with exclusive deals and premium quality.</p>
+                    <div class="cta-buttons">
+                        <button class="btn cta-btn cta-btn-primary">Shop Now</button>
+                        <button class="btn cta-btn cta-btn-secondary">Explore Deals</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-lg-6">
+                    <h2 class="fw-bold">Featured Products</h2>
+                    <p class="text-muted">Our best-selling electronics handpicked for you</p>
+                </div>
+                <div class="col-lg-6 text-lg-end">
+                    <a href="#" class="btn btn-outline-primary">View All Products</a>
+                </div>
+            </div>
+            <div class="row g-4">
+                <!-- Product 1 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100">
+                        <span class="badge-sale">20% OFF</span>
+                        <img src="https://via.placeholder.com/300/f8f9fa/cccccc?text=Smartphone" class="card-img-top" alt="Smartphone">
+                        <div class="card-body">
+                            <h5 class="card-title">Premium Smartphone</h5>
+                            <p class="card-text text-muted">6.7" OLED Display, 256GB Storage</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="price">
+                                    <span class="old-price">$1,199</span>
+                                    $999
+                                </div>
+                                <a href="#" class="btn btn-sm btn-outline-primary"><i class="bi bi-cart-plus"></i> Add</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/300/f8f9fa/cccccc?text=Headphones" class="card-img-top" alt="Wireless Headphones">
+                        <div class="card-body">
+                            <h5 class="card-title">Wireless Headphones</h5>
+                            <p class="card-text text-muted">Noise Cancelling, 30h Battery</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="price">$299</div>
+                                <a href="#" class="btn btn-sm btn-outline-primary"><i class="bi bi-cart-plus"></i> Add</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 3 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100">
+                        <span class="badge-sale">NEW</span>
+                        <img src="https://via.placeholder.com/300/f8f9fa/cccccc?text=Smartwatch" class="card-img-top" alt="Smartwatch">
+                        <div class="card-body">
+                            <h5 class="card-title">Smart Watch Pro</h5>
+                            <p class="card-text text-muted">Health Tracking, GPS, Waterproof</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="price">$349</div>
+                                <a href="#" class="btn btn-sm btn-outline-primary"><i class="bi bi-cart-plus"></i> Add</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 4 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/300/f8f9fa/cccccc?text=Laptop" class="card-img-top" alt="Laptop">
+                        <div class="card-body">
+                            <h5 class="card-title">Ultra Slim Laptop</h5>
+                            <p class="card-text text-muted">16GB RAM, 512GB SSD, 14" Display</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="price">$1,299</div>
+                                <a href="#" class="btn btn-sm btn-outline-primary"><i class="bi bi-cart-plus"></i> Add</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold text-center mb-5">Shop by Category</h2>
+            <div class="row g-4">
+                <!-- Category 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/400x300/f8f9fa/cccccc?text=Smartphones" alt="Smartphones">
+                        <div class="overlay">
+                            <h4 class="mb-0">Smartphones</h4>
+                            <a href="#" class="text-white text-decoration-none">Shop Now <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Category 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/400x300/f8f9fa/cccccc?text=Laptops" alt="Laptops">
+                        <div class="overlay">
+                            <h4 class="mb-0">Laptops & Computers</h4>
+                            <a href="#" class="text-white text-decoration-none">Shop Now <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Category 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/400x300/f8f9fa/cccccc?text=Audio" alt="Audio">
+                        <div class="overlay">
+                            <h4 class="mb-0">Audio & Headphones</h4>
+                            <a href="#" class="text-white text-decoration-none">Shop Now <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Category 4 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/400x300/f8f9fa/cccccc?text=Smart+Home" alt="Smart Home">
+                        <div class="overlay">
+                            <h4 class="mb-0">Smart Home</h4>
+                            <a href="#" class="text-white text-decoration-none">Shop Now <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Category 5 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/400x300/f8f9fa/cccccc?text=Wearables" alt="Wearables">
+                        <div class="overlay">
+                            <h4 class="mb-0">Wearable Tech</h4>
+                            <a href="#" class="text-white text-decoration-none">Shop Now <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Category 6 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="category-card">
+                        <img src="https://via.placeholder.com/400x300/f8f9fa/cccccc?text=Accessories" alt="Accessories">
+                        <div class="overlay">
+                            <h4 class="mb-0">Accessories</h4>
+                            <a href="#" class="text-white text-decoration-none">Shop Now <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offer -->
+    <section class="py-5">
+        <div class="container">
+            <div class="special-offer">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <h2 class="fw-bold mb-3">Special Summer Sale</h2>
+                        <p class="lead mb-4">Get up to 40% off on selected electronics. Limited time offer!</p>
+                        <a href="#" class="btn btn-light">Shop the Sale</a>
+                    </div>
+                    <div class="col-lg-5 text-center mt-4 mt-lg-0">
+                        <h3 class="display-3 fw-bold mb-0">40%</h3>
+                        <p class="lead">OFF</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="fw-bold text-center mb-5">Why Choose Us</h2>
+            <div class="row g-4">
+                <!-- Feature 1 -->
+                <div class="col-md-6 col-lg-3 text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <h5>Free Shipping</h5>
+                    <p class="text-muted">On orders over $50</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="col-md-6 col-lg-3 text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h5>2-Year Warranty</h5>
+                    <p class="text-muted">On all products</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="col-md-6 col-lg-3 text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </div>
+                    <h5>30-Day Returns</h5>
+                    <p class="text-muted">Hassle-free returns</p>
+                </div>
+                <!-- Feature 4 -->
+                <div class="col-md-6 col-lg-3 text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <h5>24/7 Support</h5>
+                    <p class="text-muted">Expert assistance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold text-center mb-5">What Our Customers Say</h2>
+            <div class="row g-4">
+                <!-- Testimonial 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="testimonial h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://via.placeholder.com/60x60" alt="Customer" class="me-3">
+                            <div>
+                                <h5 class="mb-0">Sarah Johnson</h5>
+                                <div class="text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0">"The laptop I purchased exceeded my expectations. Fast shipping and excellent customer service. Will definitely shop here again!"</p>
+                    </div>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="testimonial h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://via.placeholder.com/60x60" alt="Customer" class="me-3">
+                            <div>
+                                <h5 class="mb-0">Michael Chen</h5>
+                                <div class="text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0">"Great selection of electronics at competitive prices. The smart home devices I bought were easy to set up and work perfectly."</p>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="testimonial h-100">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://via.placeholder.com/60x60" alt="Customer" class="me-3">
+                            <div>
+                                <h5 class="mb-0">Emily Rodriguez</h5>
+                                <div class="text-warning">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0">"The noise-cancelling headphones are amazing! The sound quality is incredible, and the battery life is impressive. Highly recommend!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="fw-bold text-center mb-5">Top Brands</h2>
+            <div class="row g-4 align-items-center justify-content-center">
+                <div class="col-6 col-md-4 col-lg-2 text-center">
+                    <img src="https://via.placeholder.com/150x80/f8f9fa/cccccc?text=Brand+1" alt="Brand" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-4 col-lg-2 text-center">
+                    <img src="https://via.placeholder.com/150x80/f8f9fa/cccccc?text=Brand+2" alt="Brand" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-4 col-lg-2 text-center">
+                    <img src="https://via.placeholder.com/150x80/f8f9fa/cccccc?text=Brand+3" alt="Brand" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-4 col-lg-2 text-center">
+                    <img src="https://via.placeholder.com/150x80/f8f9fa/cccccc?text=Brand+4" alt="Brand" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-4 col-lg-2 text-center">
+                    <img src="https://via.placeholder.com/150x80/f8f9fa/cccccc?text=Brand+5" alt="Brand" class="img-fluid">
+                </div>
+                <div class="col-6 col-md-4 col-lg-2 text-center">
+                    <img src="https://via.placeholder.com/150x80/f8f9fa/cccccc?text=Brand+6" alt="Brand" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h2 class="fw-bold mb-3">Stay Updated</h2>
+                    <p class="text-muted mb-4">Subscribe to our newsletter for the latest products, deals, and tech news.</p>
+                    <form class="d-flex gap-2">
+                        <input type="email" class="form-control" placeholder="Your email address">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
