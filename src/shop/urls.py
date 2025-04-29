@@ -9,6 +9,8 @@ urlpatterns = [
     path('product/<int:pk>/', views.product_detail, name='product_detail'),
     path('add-to-cart/<int:pk>/', views.add_to_cart, name='add_to_cart'),
     
+    path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
+
     # Authentication URLs
     path('login/', views.login_page, name='login'),
     path('register/', views.register_page, name='register'),

@@ -24,7 +24,6 @@ def login_page(request):
             return redirect('home')
         else:
             messages.error(request, 'Invalid credentials')
-            return render(request, 'authentication/login.html')
 
     return render(request, 'shop/authentication/login.html')
 
@@ -78,6 +77,9 @@ def purchases_view(request):
     # Fetch user's purchase history here (this is a placeholder)
     purchases = []  # Replace with actual data from your models
     return render(request, 'shop/profile/purchases.html', {'purchases': purchases})
+
+def privacy_policy(request):
+    return render(request, 'shop/privacy_policy.html')
 
 def product_list(request):
     products = Product.objects.all()
