@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import render, get_object_or_404
+from .models import *
 
 def home(request):
     """Home page view."""
@@ -24,7 +26,7 @@ def login_page(request):
             messages.error(request, 'Invalid credentials')
             return render(request, 'authentication/login.html')
 
-    return render(request, 'authentication/login.html')
+    return render(request, 'shop/authentication/login.html')
 
 def register_page(request):
     """User registration page view."""
@@ -44,7 +46,7 @@ def register_page(request):
             messages.success(request, 'Account created successfully')
             return redirect('home')
 
-    return render(request, 'authentication/register.html')
+    return render(request, 'shop/authentication/register.html')
 
 def logout_view(request):
     """Logout view."""
@@ -57,7 +59,7 @@ def profile_view(request):
     """User profile page view."""
     if not request.user.is_authenticated:
         raise PermissionDenied
-    return render(request, 'profile/my_account.html', {'user': request.user})
+    return render(request, 'shop/profile/my_account.html', {'user': request.user})
 
 @login_required(login_url='login')  # Redirect unauthenticated users to login page
 def wishlist_view(request):
@@ -66,7 +68,7 @@ def wishlist_view(request):
         raise PermissionDenied
     # Fetch user's wishlist items here (this is a placeholder)
     wishlist_items = []  # Replace with actual data from your models
-    return render(request, 'profile/wishlist.html', {'wishlist_items': wishlist_items})
+    return render(request, 'shop/profile/wishlist.html', {'wishlist_items': wishlist_items})
 
 @login_required(login_url='login')  # Redirect unauthenticated users to login page
 def purchases_view(request):
@@ -75,4 +77,16 @@ def purchases_view(request):
         raise PermissionDenied
     # Fetch user's purchase history here (this is a placeholder)
     purchases = []  # Replace with actual data from your models
-    return render(request, 'profile/purchases.html', {'purchases': purchases})
+    return render(request, 'shop/profile/purchases.html', {'purchases': purchases})
+
+def product_list(request):
+    products = Product.objects.all()
+    return render(request, 'shop/products.html', {'products': products})
+
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'shop/product_detail.html', {'product': product})
+
+@login_required(login_url='login') 
+def add_to_cart(request, pk):
+    pass

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "shop/base.html" %}
 {% block content %}
 {% load static %}
     <!-- Hero Section -->
@@ -19,7 +19,7 @@
                     <h1 class="hero-title mb-4">Next-Gen Tech at Your Fingertips</h1>
                     <p class="hero-subtitle mb-5">Discover the latest innovations in electronics with exclusive deals and premium quality.</p>
                     <div class="cta-buttons">
-                        <button class="btn cta-btn cta-btn-primary">Shop Now</button>
+                        <a href="{% url 'product_list' %}" class="btn cta-btn cta-btn-primary">Shop Now</a>
                         <button class="btn cta-btn cta-btn-secondary">Explore Deals</button>
                     </div>
                 </div>
