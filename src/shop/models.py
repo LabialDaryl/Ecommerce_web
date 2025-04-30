@@ -13,10 +13,15 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='products/')
+    image = models.URLField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        usd_to_php = 56
+        self.price = self.price * usd_to_php
+        super().save(*args, **kwargs)
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

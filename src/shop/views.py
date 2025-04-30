@@ -70,6 +70,7 @@ def wishlist_view(request):
         raise PermissionDenied
     # Fetch user's wishlist items here (this is a placeholder)
     wishlist_items = []  # Replace with actual data from your models
+    w
     return render(request, 'shop/profile/wishlist.html', {'wishlist_items': wishlist_items})
 
 @login_required(login_url='login')  # Redirect unauthenticated users to login page
