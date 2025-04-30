@@ -1,0 +1,127 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Special Deals - TechTrove{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-5">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card bg-dark text-white">
+                <img src="{% static 'shop/images/deals-hero.jpg' %}" class="card-img" alt="Special Deals" style="height: 300px; object-fit: cover; opacity: 0.7;">
+                <div class="card-img-overlay d-flex align-items-center justify-content-center">
+                    <div class="text-center">
+                        <h1 class="display-4 fw-bold">Special Deals</h1>
+                        <p class="lead">Limited time offers on our best products</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Deals -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-4">Featured Deals</h2>
+        </div>
+        {% for deal in featured_deals %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="position-relative">
+                    <img src="{{ deal.product.image.url }}" class="card-img-top" alt="{{ deal.product.name }}">
+                    <div class="position-absolute top-0 end-0 bg-danger text-white p-2 rounded-bottom-left">
+                        {{ deal.discount_percentage }}% OFF
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ deal.product.name }}</h5>
+                    <p class="card-text text-muted">{{ deal.product.description|truncatewords:15 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-decoration-line-through text-muted">${{ deal.original_price }}</span>
+                            <span class="h5 ms-2 text-danger">${{ deal.discounted_price }}</span>
+                        </div>
+                        <span class="badge bg-warning text-dark">Limited Time</span>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-top-0">
+                    <a href="{% url 'product_detail' deal.product.id %}" class="btn btn-primary w-100">View Deal</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Daily Deals -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-4">Daily Deals</h2>
+        </div>
+        {% for deal in daily_deals %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="position-relative">
+                    <img src="{{ deal.product.image.url }}" class="card-img-top" alt="{{ deal.product.name }}">
+                    <div class="position-absolute top-0 end-0 bg-primary text-white p-2 rounded-bottom-left">
+                        Today's Deal
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title">{{ deal.product.name }}</h6>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-danger">${{ deal.discounted_price }}</span>
+                        <span class="text-muted small">Ends in {{ deal.time_remaining }}</span>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-top-0">
+                    <a href="{% url 'product_detail' deal.product.id %}" class="btn btn-outline-primary btn-sm w-100">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Flash Sales -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">Flash Sales</h2>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h4 class="mb-2">Flash Sale Ending Soon!</h4>
+                            <p class="text-muted mb-3">Hurry up! These deals won't last long.</p>
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <span class="h2 mb-0 text-danger">${{ flash_sale.discounted_price }}</span>
+                                    <span class="text-decoration-line-through text-muted">${{ flash_sale.original_price }}</span>
+                                </div>
+                                <div class="countdown-timer">
+                                    <div class="d-flex">
+                                        <div class="text-center me-2">
+                                            <span class="badge bg-danger p-2">{{ flash_sale.hours }}</span>
+                                            <small class="d-block text-muted">Hours</small>
+                                        </div>
+                                        <div class="text-center me-2">
+                                            <span class="badge bg-danger p-2">{{ flash_sale.minutes }}</span>
+                                            <small class="d-block text-muted">Minutes</small>
+                                        </div>
+                                        <div class="text-center">
+                                            <span class="badge bg-danger p-2">{{ flash_sale.seconds }}</span>
+                                            <small class="d-block text-muted">Seconds</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <img src="{{ flash_sale.product.image.url }}" class="img-fluid rounded" alt="{{ flash_sale.product.name }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

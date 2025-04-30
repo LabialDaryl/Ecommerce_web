@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from .models import *
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 def home(request):
     """Home page view."""
@@ -35,8 +37,9 @@ def register_page(request):
         confirm_password = request.POST.get('confirm_password')
         email = request.POST.get('email')
 
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'Username already exists')
+        if User.objects.filter(username=username, email=email, password=password).exists():
+            messages.error(request, 'account already exists')
+            
         elif password != confirm_password:
             messages.error(request, 'Passwords do not match')
         else:
@@ -81,9 +84,45 @@ def purchases_view(request):
 def privacy_policy(request):
     return render(request, 'shop/privacy_policy.html')
 
+    
 def product_list(request):
     products = Product.objects.all()
-    return render(request, 'shop/products.html', {'products': products})
+    categories = Category.objects.all()
+    
+    # Get filter parameters
+    category_id = request.GET.get('category')
+    search_query = request.GET.get('search')
+    sort_by = request.GET.get('sort', 'newest')
+    
+    # Apply filters
+    if category_id:
+        products = products.filter(category_id=category_id)
+    
+    if search_query:
+        products = products.filter(
+            Q(title__icontains=search_query) |
+            Q(description__icontains=search_query)
+        )
+    
+    # Apply sorting
+    if sort_by == 'price_low':
+        products = products.order_by('price')
+    elif sort_by == 'price_high':
+        products = products.order_by('-price')
+    else:  # newest
+        products = products.order_by('-id')
+    
+    # Pagination
+    paginator = Paginator(products, 12)  # Show 12 products per page
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+    
+    context = {
+        'products': products,
+        'categories': categories,
+        'selected_category': int(category_id) if category_id else None,
+    }
+    return render(request, 'shop/products.html', context)
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
@@ -92,3 +131,81 @@ def product_detail(request, pk):
 @login_required(login_url='login') 
 def add_to_cart(request, pk):
     pass
+
+@login_required(login_url='login')
+def cart_view(request):
+    """Shopping cart view."""
+    # Fetch cart items from the session or database
+    cart = request.session.get('cart', {})  # Example: cart stored in session
+    cart_items = []
+    subtotal = 0
+
+    for product_id, quantity in cart.items():
+        product = get_object_or_404(Product, id=product_id)
+        cart_items.append({
+            'product': product,
+            'quantity': quantity,
+            'total_price': product.price * quantity
+        })
+        subtotal += product.price * quantity
+
+    shipping = 5.00  # Example shipping cost
+    total = subtotal + shipping
+
+    return render(request, 'shop/cart.html', {
+        'cart_items': cart_items,
+        'subtotal': subtotal,
+        'shipping': shipping,
+        'total': total
+    })
+  
+def deals_view(request):
+    """Special deals and offers page view."""
+    # For now, we'll use placeholder data
+    # In a real implementation, you would fetch deals from the database
+    featured_deals = [
+        {
+            'product': {
+                'id': 1,
+                'name': 'Premium Laptop',
+                'description': 'High-performance laptop with latest specs',
+                'image': {'url': '/static/shop/images/laptop.jpg'},
+            },
+            'original_price': 1299.99,
+            'discounted_price': 999.99,
+            'discount_percentage': 23
+        },
+        # Add more featured deals as needed
+    ]
+
+    daily_deals = [
+        {
+            'product': {
+                'id': 2,
+                'name': 'Wireless Headphones',
+                'image': {'url': '/static/shop/images/headphones.jpg'},
+            },
+            'discounted_price': 79.99,
+            'time_remaining': '12:34:56'
+        },
+        # Add more daily deals as needed
+    ]
+
+    flash_sale = {
+        'product': {
+            'id': 3,
+            'name': 'Smartphone',
+            'image': {'url': '/static/shop/images/phone.jpg'},
+        },
+        'original_price': 899.99,
+        'discounted_price': 699.99,
+        'hours': '12',
+        'minutes': '34',
+        'seconds': '56'
+    }
+
+    return render(request, 'shop/deals.html', {
+        'featured_deals': featured_deals,
+        'daily_deals': daily_deals,
+        'flash_sale': flash_sale
+    })

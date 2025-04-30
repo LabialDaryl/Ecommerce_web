@@ -16,7 +16,7 @@
                         <a class="nav-link" href="{% url 'product_list' %}">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Deals</a>
+                        <a class="nav-link" href="{% url 'deals' %}">Deals</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Support</a>
@@ -27,7 +27,7 @@
                         <i class="fas fa-search search-icon"></i>
                         <input type="text" class="search-box" placeholder="Search products...">
                     </div>          
-                    <a href="#" class="cart-icon me-3">
+                    <a href="{% url 'cart' %}" class="cart-icon me-3">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-badge">3</span>
                     </a>
