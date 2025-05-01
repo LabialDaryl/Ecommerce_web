@@ -8,6 +8,11 @@ from django.shortcuts import render, get_object_or_404
 from .models import *
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.utils.crypto import get_random_string
+from django.utils.timezone import now, timedelta
+from django.urls import reverse
+from django.contrib.auth.hashers import make_password
+
 
 def home(request):
     """Home page view."""
@@ -56,6 +61,72 @@ def logout_view(request):
     messages.success(request, 'Successfully logged out')
     return redirect('login')
 
+def forgot_password(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        try:
+            user = User.objects.get(username=username)
+
+            # Generate token
+            token = get_random_string(48)
+            expires_at = now() + timedelta(hours=1)
+
+            # Create PasswordReset entry
+            PasswordReset.objects.create(user=user, token=token, expires_at=expires_at)
+
+            reset_link = request.build_absolute_uri(
+                reverse('reset_password', kwargs={'token': token})
+            )
+
+            # Store for demo or email sending
+            request.session['demo_emails'] = [{
+                'sender': 'support@pawarehauz.com',
+                'sender_email': 'support@pawarehauz.com',
+                'username': user.username,
+                'subject': 'Reset Your Password',
+                'body_preview': 'Click the button below to reset your password.',
+                'reset_link': reset_link,
+                'date': now().strftime('%b %d'),
+            }]
+
+            messages.success(request, 'Password reset instructions have been sent to your email.')
+            return redirect('view_demo_email')
+
+        except User.DoesNotExist:
+            messages.error(request, 'Username not found')
+
+    return render(request, 'shop/authentication/forgot.html')
+
+def reset_password(request, token):
+    reset_request = get_object_or_404(PasswordReset, token=token)
+
+    if reset_request.expires_at < now():
+        messages.error(request, 'Invalid or expired reset link.')
+        return redirect('forgot')  # This should match the name in urls.py
+
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if new_password != confirm_password:
+            messages.error(request, 'Passwords do not match.')
+            return render(request, 'authentication/reset_password.html', {'token': token})
+
+        user = reset_request.user  # Assuming ForeignKey to User in PasswordReset model
+        user.password = make_password(new_password)
+        user.save()
+        reset_request.delete()
+
+        messages.success(request, 'Your password has been reset successfully.')
+        return redirect('login')  # This should match your login URL name
+
+    return render(request, 'shop/authentication/reset_password.html', {'token': token})
+
+def view_demo_email(request):
+    demo_emails = request.session.get('demo_emails', [])
+    return render(request, 'shop/authentication/gmail_clone.html', {'emails': demo_emails})
+
+
 @login_required(login_url='login')  # Redirect unauthenticated users to login page
 def profile_view(request):
     """User profile page view."""
@@ -70,7 +141,8 @@ def wishlist_view(request):
         raise PermissionDenied
     # Fetch user's wishlist items here (this is a placeholder)
     wishlist_items = []  # Replace with actual data from your models
-    w
+    # Example: wishlist_items = request.user.wishlist.all()
+    # In a real implementation, you would fetch the wishlist items from the database
     return render(request, 'shop/profile/wishlist.html', {'wishlist_items': wishlist_items})
 
 @login_required(login_url='login')  # Redirect unauthenticated users to login page

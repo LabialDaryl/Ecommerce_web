@@ -1,0 +1,204 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forgot Password | Fauget</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: url("{% static 'media/mybg5_2.jpg' %}") no-repeat center center;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            background-color: rgba(11, 47, 63, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-panel {
+            display: none;
+        }
+
+        .right-panel {
+            flex: none;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .forgot-card {
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .forgot-card h2 {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            background-color: rgb(255, 255, 255);
+            border: none;
+            color: #000000;
+            padding: 12px 20px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            width: 90%;
+            font-size: 0.95rem;
+        }
+
+        .form-control::placeholder {
+            color: #ccc;
+        }
+
+        .forgot-btn {
+            background-color: #ff5e3a;
+            border: none;
+            border-radius: 50px;
+            padding: 12px;
+            font-weight: 500;
+            font-size: 1rem;
+            width: 100%;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .forgot-btn:hover {
+            background-color: #e14c2a;
+        }
+
+        .verification-message {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: #ffffff;
+        }
+
+        .verify-button {
+            display: block;
+            width: 85%;
+            margin: 20px auto;
+            padding: 12px;
+            background-color: #ff5e3a;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .verify-button:hover {
+            background-color: #e14c2a;
+        }
+
+        .links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .links a {
+            color: #ff5e3a;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .flash-message {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ff5e3a;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="right-panel">
+            <div class="forgot-card">
+                <h2>Forgot Password</h2>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="flash-message {{ message.tags }}">
+                            <i class="fas fa-exclamation-circle" style="font-size: 1.2rem;"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                {% if success %}
+                <div class="verification-message">
+                    A Verification email has been sent to this username. Please verify it.
+                    <a href="{#}" class="verify-button">View Email</a>
+                </div>
+                {% else %}
+                <form method="POST" action="{% url 'forgot' %}">
+                    {% csrf_token %}
+                    <label class="form-label" for="username">USERNAME</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                    <button type="submit" class="forgot-btn">Recover Password</button>
+                </form>
+                {% endif %}
+                
+                <div class="links">
+                    <a href="{% url 'login' %}">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        setTimeout(() => {
+            const flashMessage = document.querySelector('.flash-message');
+            if (flashMessage) {
+                flashMessage.style.transition = 'opacity 0.5s';
+                flashMessage.style.opacity = '0';
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

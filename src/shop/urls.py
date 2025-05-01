@@ -19,7 +19,10 @@ urlpatterns = [
     path('login/', views.login_page, name='login'),
     path('register/', views.register_page, name='register'),
     path('logout/', views.logout_view, name='logout'),
-    
+    path('forgot/', views.forgot_password, name='forgot'),
+    path('reset-password/<str:token>/', views.reset_password, name='reset_password'),
+    path('view_demo_email/', views.view_demo_email, name='view_demo_email'),
+
     # User-related URLs (Profile, Wishlist, Purchases)
     path('profile/', views.profile_view, name='profile'),
     path('wishlist/', views.wishlist_view, name='wishlist'),
